@@ -1,2 +1,4 @@
 # my-company-backend
-My Company Backend - MonoRepo
+
+A mono-repo version of http://ivans-innovation-lab.github.io/
+

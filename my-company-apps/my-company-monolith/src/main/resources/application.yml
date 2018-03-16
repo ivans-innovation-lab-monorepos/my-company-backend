@@ -1,0 +1,67 @@
+info:
+  app:
+    name: Monolitihic
+    description: Monolitihic - Application - All in one ;)
+
+server:
+  port: 8080
+  
+management:
+  cloudfoundry:
+    skip-ssl-validation: true
+  info:
+    git:
+      mode: full
+
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    org.axonframework: DEBUG
+    com.idugalic: DEBUG
+    com.atomist.spring.agent: DEBUG
+
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:my-company
+  jpa:
+    hibernate:
+      ddl-auto: none
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  flyway:
+    locations: classpath:db/migration/h2
+
+atomist:
+  enabled: true
+  debug: true
+  url: 'https://webhook.atomist.com/atomist/application/teams/T03LLQPNQ'
+  environment:
+    domain: '${vcap.application.application_name:development}'
+    pod: '${vcap.application.application_name:${random.value}}'
+
+---
+spring:
+  profiles: cloud
+  jpa:
+    database:
+    show-sql: true
+    hibernate:
+      use-new-id-generator-mappings: false
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: ${vcap.services.mysql.credentials.jdbcUrl}
+    username: ${vcap.services.mysql.credentials.username}
+    password: ${vcap.services.mysql.credentials.password}
+    
+  flyway:
+    locations: classpath:db/migration/mysql
+

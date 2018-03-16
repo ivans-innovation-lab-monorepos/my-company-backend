@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>my-company-common</artifactId>
+	<packaging>pom</packaging>
+
+	<name>my-company-common</name>
+	<description>My company - common</description>
+
+     <parent>
+		<groupId>com.idugalic</groupId>
+		<artifactId>my-company-libs</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+	</parent>
+	
+	<modules>
+		<module>my-company-common-common</module>
+		<module>my-company-common-blog</module>
+		<module>my-company-common-project</module>
+		<module>my-company-common-team</module>
+	</modules>
+	
+</project>

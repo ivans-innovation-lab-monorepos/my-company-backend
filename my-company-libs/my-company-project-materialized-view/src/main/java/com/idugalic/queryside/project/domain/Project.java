@@ -1,0 +1,126 @@
+package com.idugalic.queryside.project.domain;
+
+import com.idugalic.common.project.event.ProjectCreatedEvent;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Version;
+/**
+ * A JPA entity. It represents materialized view of a {@link ProjectAggregate}
+ * 
+ * @author idugalic
+ *
+ */
+@Entity
+public class Project {
+    @Id
+    private String id;
+    @Version
+    private Long version;
+    private Long aggregateVersion;
+    private String name;
+    private String repoUrl;
+    private String siteUrl;
+    private String category;
+    private String description;
+    private Boolean active;
+    public Project() {
+    }
+
+    public Project(ProjectCreatedEvent event, Long aggregateVersion) {
+        super();
+        this.id = event.getId();
+        this.aggregateVersion = aggregateVersion;
+        this.name = event.getName();
+        this.repoUrl = event.getRepoUrl();
+        this.siteUrl = event.getSiteUrl();
+        this.category = event.getCategory();
+        this.description = event.getDescription();
+        this.active = Boolean.TRUE;
+    }
+
+    public Project(String id, Long aggregateVersion, String name, String repoUrl, String siteUrl,
+                   String category, String description) {
+        super();
+        this.id = id;
+        this.aggregateVersion = aggregateVersion;
+        this.name = name;
+        this.repoUrl = repoUrl;
+        this.siteUrl = siteUrl;
+        this.category = category;
+        this.description = description;
+        this.active = Boolean.TRUE;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRepoUrl() {
+        return repoUrl;
+    }
+
+    public void setRepoUrl(String repoUrl) {
+        this.repoUrl = repoUrl;
+    }
+
+    public String getSiteUrl() {
+        return siteUrl;
+    }
+
+    public void setSiteUrl(String siteUrl) {
+        this.siteUrl = siteUrl;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public Long getAggregateVersion() {
+        return aggregateVersion;
+    }
+
+    public void setAggregateVersion(Long aggregateVersion) {
+        this.aggregateVersion = aggregateVersion;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+}

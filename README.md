@@ -86,3 +86,11 @@ $ cd my-company-backend/my-company-apps/my-company-microservices/my-company-admi
 $ mvn spring-boot:run
 
 ```
+
+  ---
+Created by [Ivan Dugalic][idugalic]@[lab][lab].
+Need Help?  [Join our Slack team][slack].
+
+[idugalic]: http://idugalic.pro
+[lab]: http://lab.idugalic.pro
+[slack]: https://communityinviter.com/apps/idugalic/idugalic

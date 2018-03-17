@@ -50,5 +50,39 @@ $ git clone https://github.com/ivans-innovation-lab-monorepos/my-company-backend
 ```bash
 $ cd my-company-backend
 $ mvn clean install
+```
+#### Run monolith
+
+```bash
+$ cd my-company-backend/my-company-apps/my-company-monolith
 $ mvn spring-boot:run
+```
+
+#### Run microservices
+
+```bash
+$ cd my-company-backend/my-company-apps/my-company-microservices/my-company-configuration-backingservice
+$ mvn spring-boot:run
+
+$ cd my-company-backend/my-company-apps/my-company-microservices/my-company-registry-backingservice
+$ mvn spring-boot:run
+
+$ cd my-company-backend/my-company-apps/my-company-microservices/my-company-blog-domain-microservice
+$ mvn spring-boot:run
+
+$ cd my-company-backend/my-company-apps/my-company-microservices/my-company-blog-materialized-view-microservice
+$ mvn spring-boot:run
+
+$ cd my-company-backend/my-company-apps/my-company-microservices/my-company-project-domain-microservice
+$ mvn spring-boot:run
+
+$ cd my-company-backend/my-company-apps/my-company-microservices/my-company-project-materialized-view-microservice
+$ mvn spring-boot:run
+
+$ cd my-company-backend/my-company-apps/my-company-microservices/my-company-api-gateway-backingservice
+$ mvn spring-boot:run
+
+$ cd my-company-backend/my-company-apps/my-company-microservices/my-company-adminserver-backingservice
+$ mvn spring-boot:run
+
 ```

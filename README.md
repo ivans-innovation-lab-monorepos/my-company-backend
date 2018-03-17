@@ -34,7 +34,7 @@ In a multi-repos scenario we are not sure how the change in a library will affec
 
 Organizing multiple teams over a one repo is hard, and this is a big drawback of a mono-repo environment.
 
-It was important to realize directions in which your organization can shift to be able to produce quality code fast. Will you go to mono-repo or multi-repo really doesn't matter, you should be able to go in both directions! You have to make your architecture aware of this, and structure your applications accordingly.
+It is important to realize directions in which your organization can shift to be able to produce quality code fast. Will you go to mono-repo or multi-repo really doesn't matter, you should be able to go in both directions and support your business strategy! You have to make your architecture aware of this, and structure your applications accordingly.
 
 
 ## Running instructions

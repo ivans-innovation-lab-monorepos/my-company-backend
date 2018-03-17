@@ -14,7 +14,9 @@ Repository is structured in two folders:
 
 Libraries are actually components that are implemented in a separate maven projects and packaged independently into 'jar' archives. This is giving us an opportunity to create a service (REST API applications) for every component independently and apply microservices architecture style as an alternative to monolith style.
 
-At this stage we have **one release cycle and deployment pipeline** of all applications and libraries together.
+![My Company dependencies](https://github.com/ivans-innovation-lab-monorepos/my-company-backend/raw/master/my-company-dependencies.png)
+
+At this stage we have **one release cycle and deployment pipeline** for all applications and libraries together.
 
 
 ## Benefits

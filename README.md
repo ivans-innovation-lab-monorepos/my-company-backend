@@ -15,9 +15,9 @@ Libraries are actually components that are implemented in a separate maven proje
 
 ## Benefits
 
-- Release management is simple (Libraries are always in SNAPSHOT. Every application depends on the latest library/component SNAPSHOT. I should introduce release versions on the level of application/s because this applications are exposing REST API that will be consumed by external partner applications, and you want to communicate changes). Maven repo tools like Nexus are not necessary.
+- Release management is simple (Libraries are always in SNAPSHOT. Every application depends on the latest library/component SNAPSHOT. I should introduce release versions on the level of application/s because this applications are exposing REST API that will be consumed by external partner applications, and you want to communicate changes).
 - **Continuous Integration is improved** (The code is integrated and tested more frequently because everything is build and tested on every push to one repository, so we know how change on a library level will affect some of the applications early in the process)
-- No need for additional tools (In mult-repo scenario you need to coordinate many repos which is very hard. We tend to use ChatOps platforms like Atomist and Slack to coordinate our work. In mono-repo scenario we can rely on Github only.
+- No need for additional tools (In mult-repo scenario you need to coordinate many repos which is very hard. We tend to use ChatOps platforms like Atomist and Slack to coordinate our work. In mono-repo scenario we can rely on Github only. Maven repo tools like Nexus are not necessary, we are not relasing our libraries (always in SNAPSHOT).
 
 ## Drawbacks
 

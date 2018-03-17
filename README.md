@@ -1,6 +1,6 @@
 # my-company-backend
 
-This **backend** application is a mono-repo version of the [lab](http://ivans-innovation-lab.github.io/). It exposes an REST API to be consumed by [internal employees or partners](http://idugalic.pro/2017-12-26-API-Strategy/).
+This **backend** application is a mono-repo version of the [lab](http://ivans-innovation-lab.github.io/). It exposes a REST API to be consumed by [internal employees or partners](http://idugalic.pro/2017-12-26-API-Strategy/).
 
 At this stage the API gets hardened and because the API is used across organizational boundaries (consumed by partenrs), the API team will learn a new set of lessons including support, documentation, authentication schemes and so on.
 

@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  
+management:
+  cloudfoundry:
+    skip-ssl-validation: true
+  info:
+    git:
+      mode: full
+logging:
+  level:
+    com.atomist.spring.agent: DEBUG
+atomist:
+  enabled: true
+  debug: true
+  url: 'https://webhook.atomist.com/atomist/application/teams/T03LLQPNQ'
+  environment:
+    domain: '${DOMAIN:development}'
+    pod: '${HOSTNAME:${random.value}}'

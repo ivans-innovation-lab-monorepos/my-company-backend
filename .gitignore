@@ -9,6 +9,10 @@ bin/
 .project
 .settings
 .springBeans
+.sts4-cache
+
+### VSCode ###
+.vscode
 
 ### IntelliJ IDEA ###
 .idea

@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: my-company-configuration-backingservice
+  cloud:
+    config:
+      enabled: true
+      server:
+        git:
+          uri: https://github.com/ivans-innovation-lab/my-company-configuration-repository.git
+    
+security:
+  user:
+    password: password
+    
+server:
+  port: ${PORT:8888} 

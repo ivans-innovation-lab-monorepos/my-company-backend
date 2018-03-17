@@ -17,6 +17,7 @@
 
 	<modules>
 		<module>my-company-monolith</module>
+		<module>my-company-microservices</module>
 	</modules>
 
 </project>

@@ -71,9 +71,9 @@ jobs:
             cf api https://api.run.pivotal.io
             cf auth idugalic@gmail.com $CF_PASSWORD
             cf target -o idugalic -s StageMonorepo
-            cf push stage-my-company-monolith -p workspace/my-company-monolith*.jar --no-start
-            cf bind-service stage-my-company-monolith mysql
-            cf restart stage-my-company-monolith
+            cf push stagemonorepo-my-company-monolith -p workspace/my-company-monolith*.jar --no-start
+            cf bind-service stagemonorepo-my-company-monolith mysql
+            cf restart stagemonorepo-my-company-monolith
   
   
   # A very simple e2e test on PWS staging environemnt
@@ -114,21 +114,21 @@ jobs:
             cf auth idugalic@gmail.com $CF_PASSWORD
             cf target -o idugalic -s ProdMonorepo
             
-            cf push prod-my-company-monolith-B -p workspace/my-company-monolith*.jar --no-start
-            cf bind-service prod-my-company-monolith-B mysql
-            cf restart prod-my-company-monolith-B
+            cf push prodmonorepo-my-company-monolith-B -p workspace/my-company-monolith*.jar --no-start
+            cf bind-service prodmonorepo-my-company-monolith-B mysql
+            cf restart prodmonorepo-my-company-monolith-B
             # Map Original Route to Green
-            cf map-route prod-my-company-monolith-B cfapps.io -n prod-my-company-monolith
+            cf map-route prodmonorepo-my-company-monolith-B cfapps.io -n prodmonorepo-my-company-monolith
             # Unmap temp Route to Green
-            cf unmap-route prod-my-company-monolith-B cfapps.io -n prod-my-company-monolith-B
+            cf unmap-route prodmonorepo-my-company-monolith-B cfapps.io -n prodmonorepo-my-company-monolith-B
             # Unmap Route to Blue (only if Blue exist)
-            cf app prod-my-company-monolith && cf unmap-route prod-my-company-monolith cfapps.io -n prod-my-company-monolith
+            cf app prodmonorepo-my-company-monolith && cf unmap-route prodmonorepo-my-company-monolith cfapps.io -n prodmonorepo-my-company-monolith
             # Stop and rename current Blue in case you need to roll back your changes (only if Blue exist)
-            cf app prod-my-company-monolith && cf stop prod-my-company-monolith
-            cf app prod-my-company-monolith-old && cf delete prod-my-company-monolith-old -f
-            cf app prod-my-company-monolith && cf rename prod-my-company-monolith prod-my-company-monolith-old
+            cf app prodmonorepo-my-company-monolith && cf stop prodmonorepo-my-company-monolith
+            cf app prodmonorepo-my-company-monolith-old && cf delete prodmonorepo-my-company-monolith-old -f
+            cf app prodmonorepo-my-company-monolith && cf rename prodmonorepo-my-company-monolith prodmonorepo-my-company-monolith-old
             # Rename Green to Blue
-            cf rename prod-my-company-monolith-B prod-my-company-monolith
+            cf rename prodmonorepo-my-company-monolith-B prodmonorepo-my-company-monolith
                            
   
 workflows:

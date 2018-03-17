@@ -1,8 +1,6 @@
 # my-company-backend
 
-This **backend** application is a mono-repo version of the [lab](http://ivans-innovation-lab.github.io/). It exposes a REST API to be consumed by [internal employees or partners](http://idugalic.pro/2017-12-26-API-Strategy/).
-
-At this stage the API gets hardened and because the API is used across organizational boundaries (consumed by partenrs), the API team will learn a new set of lessons including support, documentation, authentication schemes and so on.
+This **backend** application/s is a mono-repo version of the [lab (multi-repo version)](http://ivans-innovation-lab.github.io/), and represents its predecessor. It exposes a REST API to be consumed by [internal employees or partners](http://idugalic.pro/2017-12-26-API-Strategy/).
 
 Repository is structured in two folders:
 
@@ -11,7 +9,7 @@ Repository is structured in two folders:
    - microservices applications
 - my-company-libs (libraries/components that are used by applications)
 
-Libraries are actually components that are implemented in a separate maven projects and packaged independently into 'jar' archives. This is giving us an opportunity to create a service (REST API applications) for every component independently and apply microservices architecture style.
+Libraries are actually components that are implemented in a separate maven projects and packaged independently into 'jar' archives. This is giving us an opportunity to create a service (REST API applications) for every component independently and apply microservices architecture style as an alternative to monolith style.
 
 At this stage we have **one release cycle and deployment pipeline** of all applications and libraries together.
 

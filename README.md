@@ -1,23 +1,29 @@
 # my-company-backend
 
-This backend application is a mono-repo version of the lab: http://ivans-innovation-lab.github.io/
+This **backend** application is a mono-repo version of the [lab](http://ivans-innovation-lab.github.io/). It exposes an REST API to be consumed by [internal employees or partners](http://idugalic.pro/2017-12-26-API-Strategy/).
 
-Repo is structured in two folders
+At this stage the API gets hardened and because the API is used across organizational boundaries (consumed by partenrs), the API team will learn a new set of lessons including support, documentation, authentication schemes and so on. There is a need for a independend release cycle and deployment pipeline of an API (backend) only.
+
+Repository is structured in two folders:
 
 - my-company-apps (deployable applications)
-- my-company-libs (libraries that are used by applications)
+   - monolith application or
+   - microservices applications
+- my-company-libs (libraries/components that are used by applications)
+
+Libraries are actually components that are implemented in a separate maven projects and packaged independently into 'jar' archives. This is giving us an opportunity to create a service (REST API applications) for every component independently and apply microservices architecture style.
+
+## Benefits
+
+- Release management is simple (Libraries are always in SNAPSHOT. Every application depends on the latest library/component SNAPSHOT. I should introduce release versions on the level of application/s because this applications are exposing REST API that will be consumed by external partner applications, and you want to communicate changes). Maven repo tools like Nexus are not necessary.
+- **Continuous Integration is improved** (The code is integrated and tested more frequently because everything is build and tested on every push to one repository, so we know how change on a library level will affect some of the applications early in the process)
+- No need for additional tools (In mult-repo scenario you need to coordinate many repos which is very hard. We tend to use ChatOps platforms like Atomist and Slack to coordinate our work. In mono-repo scenario we can rely on Github only.
 
 ## Drawbacks
 
 - **Scaling development is difficult** (Multiple teams on the same code base)
 - No separate deployment of applications (All applications are deployed on every change in the git repo at the same time)
 - Securing the repo is hard (It is difficult to grant granular access rights to folders/modules/apps)
-
-## Benefits
-
-- Release management is simple (Libraries are always in SNAPSHOT. Every application depends on the latest library SNAPSHOT. I would keep applications in SNAPSHOT as well, but you can choose to introduce release versions on this level because this applications are exposing REST API that will be consumed by other applications (Frontend) and you want to communicate breaking changes)
-- **Continuous Integration is improved** (The code is integrated and tested more frequently because everything is build and tested on every push to one repository, so we know how change on a library level will affect some of the applications early in the process)
-- No need for additional tools (In mult-repo scenario you need to coordinate many repos which is very hard. We tend to use ChatOps platforms like Atomist and Slack to coordinate our work. In mono-repo scenario we can rely on Github only.
 
 ## Note
 

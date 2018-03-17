@@ -30,7 +30,7 @@ At this stage we have **one release cycle and deployment pipeline** of all appli
 
 ## Note
 
-In a multi-repos scenario we are not sure how the change in a library will affect the applications early in the process. This can be improved, but it requires specific integration testing and more infrastructure. This is not the case in mono-repo environment where we can practice Continuous Integration in a better way, which is by my opinion good benefit of a mono-repo environment. 
+In a multi-repos scenario we are not sure how the change in a library will affect the applications early in the process. This can be improved, but it requires specific integration testing and more infrastructure. This is not the case in mono-repo environment where we can practice Continuous Integration in a better way, which is a good benefit of mono-repo environment. 
 
 Organizing multiple teams over a one repo is hard, and this is a big drawback of a mono-repo environment.
 

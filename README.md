@@ -16,7 +16,7 @@ Libraries are actually components that are implemented in a separate maven proje
 
 ![My Company dependencies](https://github.com/ivans-innovation-lab-monorepos/my-company-backend/raw/master/my-company-dependencies.png)
 
-At this stage we have **one release cycle and deployment pipeline** for all applications and libraries together.
+At this stage we have **[one release cycle and deployment pipeline](https://circleci.com/gh/ivans-innovation-lab-monorepos/workflows/my-company-backend)** for all applications and libraries together.
 
 
 ## Benefits

@@ -1,0 +1,163 @@
+defaults: &defaults
+  working_directory: /home/circleci/my-company-backend
+  docker:
+    - image: circleci/openjdk:8-jdk-browsers
+    
+version: 2
+jobs:
+  # Build and test with maven
+  build:
+    <<: *defaults
+    steps:
+
+      - checkout
+      # Caching is one of the most effective ways to make jobs faster on CircleCI.
+      # Downloading from a Remote Repository in Maven is triggered by a project declaring a dependency that is not present in the local repository (or for a SNAPSHOT, when the remote repository contains one that is newer).
+      # Do not overwrite your release (not snapshots) artifacts (my-company-blog-domain, my-company-blog-materialized-view, my-company-project-domain, my-company-project-materialized-view) on remote maven repository, othervise the cache will become stale.
+      - restore_cache:
+          key: my-company-backend-{{ checksum "pom.xml" }}
+
+      - run: 
+          name: Build and Install maven artifact
+          command:  mvn install
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: my-company-backend-{{ checksum "pom.xml" }}
+      
+      - run:
+          name: Collecting test results
+          command: |
+            mkdir -p junit/
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} junit/ \;
+          when: always
+          
+      - store_test_results:
+          path: junit/
+          
+      - store_artifacts:
+          path: junit/
+          
+      - run:
+          name: Collecting artifacts
+          command: |
+            mkdir -p artifacts/
+            find . -type f -regex ".*/target/.*jar" -exec cp {} artifacts/ \;
+     
+      - store_artifacts:
+          path: artifacts/
+          
+      - persist_to_workspace:
+          root: artifacts/
+          paths:
+            - .
+   
+  # Deploying build artifact (monolith version) on PWS staging environment for testing.
+  staging:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: workspace/
+      - run:
+          name: Install CloudFoundry CLI
+          command: |
+            curl -v -L -o cf-cli_amd64.deb 'https://cli.run.pivotal.io/stable?release=debian64&source=github'
+            sudo dpkg -i cf-cli_amd64.deb
+            cf -v
+      - deploy:
+          name: Deploy to Staging - PWS CLoudFoundry (CF_PASSWORD variable required)
+          command: |
+            cf api https://api.run.pivotal.io
+            cf auth idugalic@gmail.com $CF_PASSWORD
+            cf target -o idugalic -s StageMonorepo
+            cf push stage-my-company-monolith -p workspace/my-company-monolith*.jar --no-start
+            cf bind-service stage-my-company-monolith mysql
+            cf restart stage-my-company-monolith
+  
+  
+  # A very simple e2e test on PWS staging environemnt
+  staging-e2e:
+    <<: *defaults
+    steps:
+      - run: 
+          name: End to end test on Staging
+          command: |
+            curl -I "https://stagemonorepo-my-company-monolith.cfapps.io/health"
+            curl -I "https://stagemonorepo-my-company-monolith.cfapps.io/api/blogposts"
+            curl -I "https://stagemonorepo-my-company-monolith.cfapps.io/api/projects"
+      
+  
+  # Deploying build artifact on PWS production environment with Blue-Green deployment strategy and the rollback option.
+  # Build artifact is uploaded to AWS s3 as the latest production artifact in this stage. It is used within 'production-on-staging' and 'production-on-staging-e2e' jobs to test DB schema backward compatibility
+  production:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: workspace/
+          
+      - run:
+          name: Install CloudFoundry CLI
+          command: |
+            curl -v -L -o cf-cli_amd64.deb 'https://cli.run.pivotal.io/stable?release=debian64&source=github'
+            sudo dpkg -i cf-cli_amd64.deb
+            cf -v
+            
+      - run: 
+          name: Install AWS CLI
+          command: sudo apt-get update && sudo apt-get install -y awscli
+          
+      - deploy:
+          name: Deploy to Production - PWS CLoudFoundry (CF_PASSWORD variable required)
+          command: |
+            cf api https://api.run.pivotal.io
+            cf auth idugalic@gmail.com $CF_PASSWORD
+            cf target -o idugalic -s ProdMonorepo
+            
+            cf push prod-my-company-monolith-B -p workspace/my-company-monolith*.jar --no-start
+            cf bind-service prod-my-company-monolith-B mysql
+            cf restart prod-my-company-monolith-B
+            # Map Original Route to Green
+            cf map-route prod-my-company-monolith-B cfapps.io -n prod-my-company-monolith
+            # Unmap temp Route to Green
+            cf unmap-route prod-my-company-monolith-B cfapps.io -n prod-my-company-monolith-B
+            # Unmap Route to Blue (only if Blue exist)
+            cf app prod-my-company-monolith && cf unmap-route prod-my-company-monolith cfapps.io -n prod-my-company-monolith
+            # Stop and rename current Blue in case you need to roll back your changes (only if Blue exist)
+            cf app prod-my-company-monolith && cf stop prod-my-company-monolith
+            cf app prod-my-company-monolith-old && cf delete prod-my-company-monolith-old -f
+            cf app prod-my-company-monolith && cf rename prod-my-company-monolith prod-my-company-monolith-old
+            # Rename Green to Blue
+            cf rename prod-my-company-monolith-B prod-my-company-monolith
+                           
+  
+workflows:
+  version: 2
+  my-company-backend-workflow:
+    jobs:
+      - build
+      - staging:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+      - staging-e2e:
+          requires:
+            - staging
+          filters:
+            branches:
+              only: master
+      - approve-production:
+          type: approval
+          requires:
+            - production-on-staging-e2e
+          filters:
+            branches:
+              only: master
+      - production:
+          requires:
+            - approve-production
+          filters:
+            branches:
+              only: master

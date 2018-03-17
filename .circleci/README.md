@@ -10,11 +10,11 @@ cf api https://api.run.pivotal.io
 cf auth EMAIL PASSWORD
 
 # Space Staging
-cf target -o idugalic -s Stage
+cf target -o idugalic -s StageMonorepo
 cf create-service cleardb spark mysql
 
 # Space Production
-cf t -s Prod
+cf t -s ProdMonorepo
 cf create-service cleardb spark mysql
 
 

@@ -151,7 +151,7 @@ workflows:
       - approve-production:
           type: approval
           requires:
-            - production-on-staging-e2e
+            - staging-e2e
           filters:
             branches:
               only: master

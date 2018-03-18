@@ -71,9 +71,44 @@ jobs:
             cf api https://api.run.pivotal.io
             cf auth idugalic@gmail.com $CF_PASSWORD
             cf target -o idugalic -s StageMonorepo
+            # Deploying monolith
             cf push stagemonorepo-my-company-monolith -p workspace/my-company-monolith*.jar --no-start
             cf bind-service stagemonorepo-my-company-monolith mysql
             cf restart stagemonorepo-my-company-monolith
+            # Deploying microservices
+            ## my-company-configuration-backingservice
+            cf push stagemonorepo-my-company-configuration-backingservice -p workspace/my-company-configuration-backingservice*.jar --no-start
+            cf bind-service stagemonorepo-my-company-configuration-backingservice mysql
+            cf restart stagemonorepo-my-company-configuration-backingservice
+            ## my-company-registry-backingservice
+            cf push stagemonorepo-my-company-registry-backingservice -p workspace/my-company-registry-backingservice*.jar --no-start
+            cf bind-service stagemonorepo-my-company-registry-backingservice mysql
+            cf restart stagemonorepo-my-company-registry-backingservice
+            ## my-company-blog-domain-microservice
+            cf push stagemonorepo-my-company-blog-domain-microservice -p workspace/my-company-blog-domain-microservice*.jar --no-start
+            cf bind-service stagemonorepo-my-company-blog-domain-microservice mysql
+            cf restart stagemonorepo-my-company-blog-domain-microservice
+            ## my-company-blog-materialized-view-microservice
+            cf push stagemonorepo-my-company-blog-materialized-view-microservice -p workspace/my-company-blog-materialized-view-microservice*.jar --no-start
+            cf bind-service stagemonorepo-my-company-blog-materialized-view-microservice mysql
+            cf restart stagemonorepo-my-company-blog-materialized-view-microservice
+            ## my-company-project-domain-microservice
+            cf push stagemonorepo-my-company-project-domain-microservice -p workspace/my-company-project-domain-microservice*.jar --no-start
+            cf bind-service stagemonorepo-my-company-project-domain-microservice mysql
+            cf restart stagemonorepo-my-company-project-domain-microservice
+            ## my-company-project-materialized-view-microservice
+            cf push stagemonorepo-my-company-project-materialized-view-microservice -p workspace/my-company-project-materialized-view-microservice*.jar --no-start
+            cf bind-service stagemonorepo-my-company-project-materialized-view-microservice mysql
+            cf restart stagemonorepo-my-company-project-materialized-view-microservice
+             ## my-company-api-gateway-backingservice
+            cf push stagemonorepo-my-company-api-gateway-backingservice -p workspace/my-company-api-gateway-backingservicee*.jar --no-start
+            cf bind-service stagemonorepo-my-company-api-gateway-backingservice mysql
+            cf restart stagemonorepo-my-company-api-gateway-backingservice
+             ## my-company-adminserver-backingservice
+            cf push stagemonorepo-my-company-adminserver-backingservice -p workspace/my-company-adminserver-backingservice*.jar --no-start
+            cf bind-service stagemonorepo-my-company-adminserver-backingservice mysql
+            cf restart stagemonorepo-my-company-adminserver-backingservice
+
   
   
   # A very simple e2e test on PWS staging environemnt
@@ -84,10 +119,16 @@ jobs:
           name: End to end test on Staging
           command: |
             curl -I "https://stagemonorepo-my-company-monolith.cfapps.io/health"
-            curl -I "https://stagemonorepo-my-company-monolith.cfapps.io/api/blogposts"
-            curl -I "https://stagemonorepo-my-company-monolith.cfapps.io/api/projects"
-      
-  
+            curl -I "https://stagemonorepo-my-company-configuration-backingservice.cfapps.io/health"
+            curl -I "https://stagemonorepo-my-company-blog-domain-microservice.cfapps.io/health"
+            curl -I "https://stagemonorepo-my-company-project-domain-microservice.cfapps.io/health"
+            curl -I "https://stagemonorepo-my-company-blog-materialized-view-microservice.cfapps.io/health"
+            curl -I "https://stagemonorepo-my-company-project-materialized-view-microservice.cfapps.io/health"
+            curl -I "https://stagemonorepo-my-company-registry-backingservice.cfapps.io/health"
+            curl -I "https://stagemonorepo-my-company-adminserver-backingservice.cfapps.io/health"
+            curl -I "https://stagemonorepo-my-company-api-gateway-backingservice.cfapps.io/health"
+
+
   # Deploying build artifact on PWS production environment with Blue-Green deployment strategy and the rollback option.
   # Build artifact is uploaded to AWS s3 as the latest production artifact in this stage. It is used within 'production-on-staging' and 'production-on-staging-e2e' jobs to test DB schema backward compatibility
   production:
@@ -113,22 +154,24 @@ jobs:
             cf api https://api.run.pivotal.io
             cf auth idugalic@gmail.com $CF_PASSWORD
             cf target -o idugalic -s ProdMonorepo
-            
+            # Deploying monolith
             cf push prodmonorepo-my-company-monolith-B -p workspace/my-company-monolith*.jar --no-start
             cf bind-service prodmonorepo-my-company-monolith-B mysql
             cf restart prodmonorepo-my-company-monolith-B
-            # Map Original Route to Green
+            ### Map Original Route to Green
             cf map-route prodmonorepo-my-company-monolith-B cfapps.io -n prodmonorepo-my-company-monolith
-            # Unmap temp Route to Green
+            ### Unmap temp Route to Green
             cf unmap-route prodmonorepo-my-company-monolith-B cfapps.io -n prodmonorepo-my-company-monolith-B
-            # Unmap Route to Blue (only if Blue exist)
+            ### Unmap Route to Blue (only if Blue exist)
             cf app prodmonorepo-my-company-monolith && cf unmap-route prodmonorepo-my-company-monolith cfapps.io -n prodmonorepo-my-company-monolith
-            # Stop and rename current Blue in case you need to roll back your changes (only if Blue exist)
+            ### Stop and rename current Blue in case you need to roll back your changes (only if Blue exist)
             cf app prodmonorepo-my-company-monolith && cf stop prodmonorepo-my-company-monolith
             cf app prodmonorepo-my-company-monolith-old && cf delete prodmonorepo-my-company-monolith-old -f
             cf app prodmonorepo-my-company-monolith && cf rename prodmonorepo-my-company-monolith prodmonorepo-my-company-monolith-old
-            # Rename Green to Blue
+            ### Rename Green to Blue
             cf rename prodmonorepo-my-company-monolith-B prodmonorepo-my-company-monolith
+            # Deploying microservices
+            ## TODO
                            
   
 workflows:

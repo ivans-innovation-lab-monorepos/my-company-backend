@@ -22,16 +22,15 @@ At this stage we have **[one deployment pipeline](https://circleci.com/gh/ivans-
 ## Benefits
 
 - **Promotes code sharing and reuse**
-- **Unified versioning** 
+- **Easier dependency management and unified versioning**
   - Everything at that current commit works together
-- **Easier dependency management and release management**
   - Libraries are always in SNAPSHOT
-  - Every application depends on the latest library/component SNAPSHOT
-  - We introduced release versions on the level of application/s because this applications are exposing REST API that will be consumed by external partner applications, and you want to communicate changes
+  - Every application depends on the latest library SNAPSHOT
+  - Release versions on the application/s level only (Applications are exposing REST API that will be consumed by external partner applications, and you want to communicate changes)
 - **Easier continuous integration**
-  - The code is integrated and tested more frequently because 'everything' is build and tested on each commit and push to the same repository, so we know how the change on a library level will affect some of the applications early in the process
+  - The code is integrated and tested more frequently because 'everything' is build and tested on each commit to the repository, so we learn fast how the change on a library level will affect applications 
 - **No need for additional tools**
-  - In mult-repo scenario you need to coordinate many repos which is very hard.We tend to use ChatOps platforms like Atomist and Slack to coordinate our work. 
+  - In mult-repo scenario you need to coordinate many repos which is very hard. We tend to use ChatOps platforms like Atomist and Slack to coordinate our work. 
   - In mono-repo scenario we can rely on the Github only. Maven repo tools like Nexus are not necessary, we are not publishing our libraries (always in SNAPSHOT).
 
 ## Drawbacks

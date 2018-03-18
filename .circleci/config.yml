@@ -119,11 +119,11 @@ jobs:
             cf bind-service stagemonorepo-my-company-api-gateway-backingservice my-company-registry-backingservice
             cf bind-service stagemonorepo-my-company-api-gateway-backingservice rabbit
             cf restart stagemonorepo-my-company-api-gateway-backingservice
-             ## my-company-adminserver-backingservice
-            cf push stagemonorepo-my-company-adminserver-backingservice -p workspace/my-company-adminserver-backingservice*.jar --no-start
-            cf bind-service stagemonorepo-my-company-adminserver-backingservice my-company-configuration-backingservice
-            cf bind-service stagemonorepo-my-company-adminserver-backingservice my-company-registry-backingservice
-            cf restart stagemonorepo-my-company-adminserver-backingservice
+            ## my-company-adminserver-backingservice
+            # cf push stagemonorepo-my-company-adminserver-backingservice -p workspace/my-company-adminserver-backingservice*.jar --no-start
+            # cf bind-service stagemonorepo-my-company-adminserver-backingservice my-company-configuration-backingservice
+            # cf bind-service stagemonorepo-my-company-adminserver-backingservice my-company-registry-backingservice
+            # cf restart stagemonorepo-my-company-adminserver-backingservice
 
   
   

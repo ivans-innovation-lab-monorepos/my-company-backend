@@ -114,7 +114,7 @@ jobs:
             cf bind-service stagemonorepo-my-company-project-materialized-view-microservice rabbit
             cf restart stagemonorepo-my-company-project-materialized-view-microservice
              ## my-company-api-gateway-backingservice
-            cf push stagemonorepo-my-company-api-gateway-backingservice -p workspace/my-company-api-gateway-backingservicee*.jar --no-start
+            cf push stagemonorepo-my-company-api-gateway-backingservice -p workspace/my-company-api-gateway-backingservice*.jar --no-start
             cf bind-service stagemonorepo-my-company-api-gateway-backingservice mysql
             cf bind-service stagemonorepo-my-company-api-gateway-backingservice my-company-configuration-backingservice
             cf bind-service stagemonorepo-my-company-api-gateway-backingservice my-company-registry-backingservice
@@ -188,7 +188,7 @@ jobs:
             cf app prodmonorepo-my-company-monolith && cf rename prodmonorepo-my-company-monolith prodmonorepo-my-company-monolith-old
             ### Rename Green to Blue
             cf rename prodmonorepo-my-company-monolith-B prodmonorepo-my-company-monolith
-            # Deploying microservices
+            # Deploying microservices to production
             ## TODO
                            
   

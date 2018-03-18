@@ -83,30 +83,48 @@ jobs:
             ## my-company-registry-backingservice
             cf push stagemonorepo-my-company-registry-backingservice -p workspace/my-company-registry-backingservice*.jar --no-start
             cf bind-service stagemonorepo-my-company-registry-backingservice mysql
+            cf bind-service stagemonorepo-my-company-registry-backingservice my-company-configuration-backingservice
             cf restart stagemonorepo-my-company-registry-backingservice
             ## my-company-blog-domain-microservice
             cf push stagemonorepo-my-company-blog-domain-microservice -p workspace/my-company-blog-domain-microservice*.jar --no-start
             cf bind-service stagemonorepo-my-company-blog-domain-microservice mysql
+            cf bind-service stagemonorepo-my-company-blog-domain-microservice my-company-configuration-backingservice
+            cf bind-service stagemonorepo-my-company-blog-domain-microservice my-company-registry-backingservice
+            cf bind-service stagemonorepo-my-company-blog-domain-microservice rabbit
             cf restart stagemonorepo-my-company-blog-domain-microservice
             ## my-company-blog-materialized-view-microservice
             cf push stagemonorepo-my-company-blog-materialized-view-microservice -p workspace/my-company-blog-materialized-view-microservice*.jar --no-start
             cf bind-service stagemonorepo-my-company-blog-materialized-view-microservice mysql
+            cf bind-service stagemonorepo-my-company-blog-materialized-view-microservice my-company-configuration-backingservice
+            cf bind-service stagemonorepo-my-company-blog-materialized-view-microservice my-company-registry-backingservice
+            cf bind-service stagemonorepo-my-company-blog-materialized-view-microservice rabbit
             cf restart stagemonorepo-my-company-blog-materialized-view-microservice
             ## my-company-project-domain-microservice
             cf push stagemonorepo-my-company-project-domain-microservice -p workspace/my-company-project-domain-microservice*.jar --no-start
             cf bind-service stagemonorepo-my-company-project-domain-microservice mysql
+            cf bind-service stagemonorepo-my-company-project-domain-microservice my-company-configuration-backingservice
+            cf bind-service stagemonorepo-my-company-project-domain-microservice my-company-registry-backingservice
+            cf bind-service stagemonorepo-my-company-project-domain-microservice rabbit
             cf restart stagemonorepo-my-company-project-domain-microservice
             ## my-company-project-materialized-view-microservice
             cf push stagemonorepo-my-company-project-materialized-view-microservice -p workspace/my-company-project-materialized-view-microservice*.jar --no-start
             cf bind-service stagemonorepo-my-company-project-materialized-view-microservice mysql
+            cf bind-service stagemonorepo-my-company-project-materialized-view-microservice my-company-configuration-backingservice
+            cf bind-service stagemonorepo-my-company-project-materialized-view-microservice my-company-registry-backingservice
+            cf bind-service stagemonorepo-my-company-project-materialized-view-microservice rabbit
             cf restart stagemonorepo-my-company-project-materialized-view-microservice
              ## my-company-api-gateway-backingservice
             cf push stagemonorepo-my-company-api-gateway-backingservice -p workspace/my-company-api-gateway-backingservicee*.jar --no-start
             cf bind-service stagemonorepo-my-company-api-gateway-backingservice mysql
+            cf bind-service stagemonorepo-my-company-api-gateway-backingservice my-company-configuration-backingservice
+            cf bind-service stagemonorepo-my-company-api-gateway-backingservice my-company-registry-backingservice
+            cf bind-service stagemonorepo-my-company-api-gateway-backingservice rabbit
             cf restart stagemonorepo-my-company-api-gateway-backingservice
              ## my-company-adminserver-backingservice
             cf push stagemonorepo-my-company-adminserver-backingservice -p workspace/my-company-adminserver-backingservice*.jar --no-start
             cf bind-service stagemonorepo-my-company-adminserver-backingservice mysql
+            cf bind-service stagemonorepo-my-company-adminserver-backingservice my-company-configuration-backingservice
+            cf bind-service stagemonorepo-my-company-adminserver-backingservice my-company-registry-backingservice
             cf restart stagemonorepo-my-company-adminserver-backingservice
 
   

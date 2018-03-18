@@ -1,4 +1,4 @@
-# my-company-backend
+# my-company-backend [![CircleCI](https://circleci.com/gh/ivans-innovation-lab-monorepos/my-company-backend.svg?style=svg)](https://circleci.com/gh/ivans-innovation-lab-monorepos/my-company-backend)
 
 This **backend** application/s is a mono-repo version of the [lab (multi-repo version)](http://ivans-innovation-lab.github.io/), and represents its predecessor. It exposes a REST API to be consumed by [internal employees or partners](http://idugalic.pro/2017-12-26-API-Strategy/).
 
@@ -16,7 +16,7 @@ Libraries are actually components that are implemented in a separate maven proje
 
 ![My Company dependencies](https://github.com/ivans-innovation-lab-monorepos/my-company-backend/raw/master/my-company-dependencies.png)
 
-At this stage we have **[one release cycle and deployment pipeline](https://circleci.com/gh/ivans-innovation-lab-monorepos/workflows/my-company-backend)** for all applications and libraries together.
+At this stage we have **[one deployment pipeline](https://circleci.com/gh/ivans-innovation-lab-monorepos/workflows/my-company-backend)** for all applications and libraries together.
 
 
 ## Benefits

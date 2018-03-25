@@ -12,11 +12,11 @@ Repository is structured in two folders:
    - microservices applications
 - my-company-libs (libraries/components that are used by applications)
 
-Libraries are implemented in a separate maven projects and packaged independently into 'jar' archives. This promotes code sharing, reuse and it will enable us to apply microservices architecture style as an alternative to monolith style easier.
+Libraries are implemented in a separate maven projects and packaged independently into 'jar' archives. This promotes code sharing, reuse and it will enable us to apply microservices architecture style as an alternative to a monolith style.
 
 ![My Company dependencies](https://github.com/ivans-innovation-lab-monorepos/my-company-backend/raw/master/my-company-dependencies.png)
 
-At this stage we have **[one deployment pipeline](https://circleci.com/gh/ivans-innovation-lab-monorepos/workflows/my-company-backend)** for all applications and libraries together.
+At this stage we have **[one deployment pipeline](https://circleci.com/gh/ivans-innovation-lab-monorepos/workflows/my-company-backend)** for all projects (apps & libs). In addition, all projects in the repository share the same dependencies. Hence, there are no version conflicts b/c everyone has to use the same/ the latest (snapshot) version. And you don't need to deal with a private maven repository when you just want to use your own libraries.
 
 
 ## Benefits

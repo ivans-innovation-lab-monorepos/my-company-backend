@@ -1,6 +1,6 @@
 # [projects](http://ivans-innovation-lab-monorepos.github.io/projects)/my-company-backend [![CircleCI](https://circleci.com/gh/ivans-innovation-lab-monorepos/my-company-backend.svg?style=svg)](https://circleci.com/gh/ivans-innovation-lab-monorepos/my-company-backend)
 
-This **backend** application/s is a mono-repo version of the [lab (multi-repo version)](http://ivans-innovation-lab.github.io/), and represents its predecessor. It exposes a REST API to be consumed by [internal employees or partners](http://idugalic.pro/2017-12-26-API-Strategy/).
+This **backend** application/s is a mono-repo version of the [lab](http://ivans-innovation-lab-monorepos.github.io), and represents a predecessor of a [multi-repo version](http://ivans-innovation-lab.github.io). It exposes a REST API to be consumed by [internal employees or partners](http://idugalic.pro/2017-12-26-API-Strategy).
 
 ![Monorepo](https://github.com/ivans-innovation-lab-monorepos/my-company-backend/raw/master/monorepo.png)
 

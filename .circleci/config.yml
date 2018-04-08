@@ -189,7 +189,10 @@ jobs:
             # Deploying microservices to production
             ## TODO
                            
-  
+notify:
+  webhooks:
+    - url: https://webhook.atomist.com/atomist/circle
+
 workflows:
   version: 2
   my-company-backend-workflow:

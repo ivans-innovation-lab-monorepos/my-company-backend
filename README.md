@@ -40,7 +40,7 @@ At this stage we have **[one deployment pipeline](https://circleci.com/gh/ivans-
 - **An upgrade to a lib requires a change to all implementors (can't roll out different versions side by side)**
 - **Takes work to try and limit access to parts of the code base**
 
-## How it works
+## Architecture overview
 
 Domain Driven Design is applied through Event Sourcing and CQRS. How Event Sourcing enables deployment flexibility - the application can be deployed as a monolithic or microservices.
 
